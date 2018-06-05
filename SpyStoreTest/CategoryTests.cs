@@ -28,11 +28,9 @@ namespace SpyStore.DAL.Tests
 
         private void CleanDatabase()
         {
-            _db.Database.ExecuteSqlCommand("Delete from Categories");
+            _db.Database.ExecuteSqlCommand("truncate  \"Categories\"  restart identity cascade");
 
-            _db.Database.ExecuteSqlCommand(
-                "UPDATE sqlite_sequence SET seq = (SELECT coalesce(MAX(id) , 0)FROM Categories)" +
-                " WHERE name = 'Categories' ");
+         
         }
 
         [Fact]

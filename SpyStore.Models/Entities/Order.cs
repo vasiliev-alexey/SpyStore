@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+ 
 using SpyStore.Models.Entities.Base;
 
 namespace SpyStore.Models.Entities
@@ -11,10 +12,10 @@ namespace SpyStore.Models.Entities
     {
        
         public int CustomerId { get; set; }
-        [DataType(DataType.Date)]
+        [Column(TypeName = "Date")]
         [Display(Name = "Date Ordered")]
         public DateTime OrderDate { get; set; }
-        [DataType(DataType.Date)]
+        [Column(TypeName = "Date")]
         [Display(Name = "Date Shipped")]
         public DateTime ShipDate { get; set; }
         [ForeignKey("CustomerId")]

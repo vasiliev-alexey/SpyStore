@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CDorst.DevOps.Primitives.NuGet" Version="3.1.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NodaTime">
+      <HintPath>..\..\..\..\..\.nuget\packages\nodatime\2.3.0\lib\netstandard1.3\NodaTime.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

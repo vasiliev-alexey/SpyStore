@@ -1,27 +1,37 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SpyStore.DAL.EF.Migrations
+namespace SpyStore.DAL.Migrations
 {
-    public partial class RemainingTables : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameTable(
+            migrationBuilder.CreateTable(
                 name: "Categories",
-                schema: "Store");
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    CategoryName = table.Column<string>(maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    EmailAddress = table.Column<string>(maxLength: 50, nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     FullName = table.Column<string>(maxLength: 50, nullable: true),
-                    Password = table.Column<string>(maxLength: 50, nullable: false),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true)
+                    EmailAddress = table.Column<string>(maxLength: 50, nullable: false),
+                    Password = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,19 +43,19 @@ namespace SpyStore.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CategoryId = table.Column<int>(nullable: false),
-                    CurrentPrice = table.Column<decimal>(nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Description = table.Column<string>(maxLength: 3800, nullable: true),
-                    IsFeatured = table.Column<bool>(nullable: false),
                     ModelName = table.Column<string>(maxLength: 50, nullable: true),
+                    IsFeatured = table.Column<bool>(nullable: false),
                     ModelNumber = table.Column<string>(maxLength: 50, nullable: true),
                     ProductImage = table.Column<string>(maxLength: 150, nullable: true),
                     ProductImageLarge = table.Column<string>(maxLength: 150, nullable: true),
                     ProductImageThumb = table.Column<string>(maxLength: 150, nullable: true),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     UnitCost = table.Column<decimal>(nullable: false),
-                    UnitsInStock = table.Column<int>(nullable: false)
+                    CurrentPrice = table.Column<decimal>(nullable: false),
+                    UnitsInStock = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,11 +73,11 @@ namespace SpyStore.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     CustomerId = table.Column<int>(nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "date('now')"),
-                    ShipDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "date('now')"),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true)
+                    OrderDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "now()"),
+                    ShipDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "now()")
                 },
                 constraints: table =>
                 {
@@ -85,13 +95,12 @@ namespace SpyStore.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "Date", nullable: true, defaultValueSql: "now()"),
                     CustomerId = table.Column<int>(nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "date('now')"),
-                    ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false, defaultValue: 1)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true)
+                    Quantity = table.Column<int>(nullable: false, defaultValue: 1),
+                    ProductId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,11 +124,11 @@ namespace SpyStore.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     OrderId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     UnitCost = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
@@ -199,12 +208,8 @@ namespace SpyStore.DAL.EF.Migrations
             migrationBuilder.DropTable(
                 name: "Customers");
 
-            migrationBuilder.EnsureSchema(
-                name: "Store");
-
-            migrationBuilder.RenameTable(
-                name: "Categories",
-                newSchema: "Store");
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }
