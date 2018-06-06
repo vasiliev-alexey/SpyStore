@@ -126,16 +126,16 @@ namespace SpyStore.DAL.Repos.Base
             return persist ? SaveChanges() : 0;
         }
 
-        public int Delete(int id, byte[] timeStamp, bool persist = true)
+        public int Delete(int id, bool persist = true)
         {
-            var entry = GetEntryFromChangeTracker(id);
-            if (entry != null)
-            {
-                if (entry.TimeStamp == timeStamp) return Delete(entry, persist);
-                throw new Exception("Unable to delete due to concurrency violation.");
-            }
+//            var entry = GetEntryFromChangeTracker(id);
+//            if (entry != null)
+//            {
+//                if (entry.TimeStamp == timeStamp) return Delete(entry, persist);
+//                throw new Exception("Unable to delete due to concurrency violation.");
+//            }
 
-            Db.Entry(new T {Id = id, TimeStamp = timeStamp}).State = EntityState.Deleted;
+            Db.Entry(new T {Id = id}).State = EntityState.Deleted;
             return persist ? SaveChanges() : 0;
         }
 

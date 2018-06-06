@@ -5,7 +5,7 @@ using SpyStore.Models.Entities.Base;
 
 namespace SpyStore.Models.Entities
 {
-    [Table("Customers")]
+    [Table("customers", Schema = "store")]
     public class Customer : EntityBase
     {
         [DataType(DataType.Text)]

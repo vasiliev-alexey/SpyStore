@@ -7,7 +7,7 @@ using SpyStore.Models.Entities.Base;
 
 namespace SpyStore.Models.Entities
 {
-    [Table("Orders")]
+    [Table("orders", Schema = "store")]
     public class Order : EntityBase
     {
        

@@ -33,12 +33,7 @@ namespace SpyStore.DAL.Tests
          
         }
 
-        [Fact]
-        public void FirstTest()
-        {
-            Assert.True(true);
-        }
-
+      
         [Fact]
         public void ShouldAddACategoryWithDbSet()
         {
@@ -46,7 +41,7 @@ namespace SpyStore.DAL.Tests
             _db.Categories.Add(category);
             Assert.Equal(EntityState.Added, _db.Entry(category).State);
             Assert.True(category.Id < 0);
-            Assert.Null(category.TimeStamp);
+          
             var rs = _db.SaveChanges();
 
             Debug.Write(rs);

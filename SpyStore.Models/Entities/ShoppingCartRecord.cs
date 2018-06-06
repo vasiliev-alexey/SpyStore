@@ -5,7 +5,7 @@ using SpyStore.Models.Entities.Base;
 
 namespace SpyStore.Models.Entities
 {
-    [Table("ShoppingCartRecords")]
+    [Table("shopping_cart_records", Schema = "store")]
     public class ShoppingCartRecord :EntityBase
     {
         [DataType(DataType.Date)]

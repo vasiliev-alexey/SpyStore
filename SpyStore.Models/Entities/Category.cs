@@ -7,7 +7,7 @@ using SpyStore.Models.Entities.Base;
 
 namespace SpyStore.Models.Entities
 {
-    [Table("Categories")]
+    [Table("categories", Schema = "store")]
     public class Category : EntityBase
     {
         [DataType(DataType.Text), MaxLength(50)]

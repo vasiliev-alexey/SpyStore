@@ -8,43 +8,46 @@ namespace SpyStore.DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "store");
+
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "categories",
+                schema: "store",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     CategoryName = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "customers",
+                schema: "store",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     FullName = table.Column<string>(maxLength: 50, nullable: true),
                     EmailAddress = table.Column<string>(maxLength: 50, nullable: false),
                     Password = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_customers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "products",
+                schema: "store",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Description = table.Column<string>(maxLength: 3800, nullable: true),
                     ModelName = table.Column<string>(maxLength: 50, nullable: true),
                     IsFeatured = table.Column<bool>(nullable: false),
@@ -59,44 +62,46 @@ namespace SpyStore.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
+                        name: "FK_products_categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Categories",
+                        principalSchema: "store",
+                        principalTable: "categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "orders",
+                schema: "store",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     CustomerId = table.Column<int>(nullable: false),
                     OrderDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "now()"),
                     ShipDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "now()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
+                        name: "FK_orders_customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        principalSchema: "store",
+                        principalTable: "customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingCartRecords",
+                name: "shopping_cart_records",
+                schema: "store",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     DateCreated = table.Column<DateTime>(type: "Date", nullable: true, defaultValueSql: "now()"),
                     CustomerId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false, defaultValue: 1),
@@ -104,28 +109,30 @@ namespace SpyStore.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCartRecords", x => x.Id);
+                    table.PrimaryKey("PK_shopping_cart_records", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartRecords_Customers_CustomerId",
+                        name: "FK_shopping_cart_records_customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        principalSchema: "store",
+                        principalTable: "customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartRecords_Products_ProductId",
+                        name: "FK_shopping_cart_records_products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Products",
+                        principalSchema: "store",
+                        principalTable: "products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDetails",
+                name: "order_details",
+                schema: "store",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     OrderId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
@@ -133,60 +140,70 @@ namespace SpyStore.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetails", x => x.Id);
+                    table.PrimaryKey("PK_order_details", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_Orders_OrderId",
+                        name: "FK_order_details_orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Orders",
+                        principalSchema: "store",
+                        principalTable: "orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_Products_ProductId",
+                        name: "FK_order_details_products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Products",
+                        principalSchema: "store",
+                        principalTable: "products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customer",
-                table: "Customers",
+                schema: "store",
+                table: "customers",
                 column: "EmailAddress",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OrderId",
-                table: "OrderDetails",
+                name: "IX_order_details_OrderId",
+                schema: "store",
+                table: "order_details",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_ProductId",
-                table: "OrderDetails",
+                name: "IX_order_details_ProductId",
+                schema: "store",
+                table: "order_details",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
-                table: "Orders",
+                name: "IX_orders_CustomerId",
+                schema: "store",
+                table: "orders",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoryId",
-                table: "Products",
+                name: "IX_products_CategoryId",
+                schema: "store",
+                table: "products",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartRecords_CustomerId",
-                table: "ShoppingCartRecords",
+                name: "IX_shopping_cart_records_CustomerId",
+                schema: "store",
+                table: "shopping_cart_records",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartRecords_ProductId",
-                table: "ShoppingCartRecords",
+                name: "IX_shopping_cart_records_ProductId",
+                schema: "store",
+                table: "shopping_cart_records",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCart",
-                table: "ShoppingCartRecords",
+                schema: "store",
+                table: "shopping_cart_records",
                 columns: new[] { "Id", "ProductId", "CustomerId" },
                 unique: true);
         }
@@ -194,22 +211,28 @@ namespace SpyStore.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "OrderDetails");
+                name: "order_details",
+                schema: "store");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCartRecords");
+                name: "shopping_cart_records",
+                schema: "store");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "orders",
+                schema: "store");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "products",
+                schema: "store");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "customers",
+                schema: "store");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "categories",
+                schema: "store");
         }
     }
 }

@@ -17,7 +17,7 @@ namespace SpyStore.DAL.Repos.Base
         int UpdateRange(IEnumerable<T> entities, bool persist = true);
         int Delete(T entity, bool persist = true);
         int DeleteRange(IEnumerable<T> entities, bool persist = true);
-        int Delete(int id, byte[] timeStamp, bool persist = true);
+        int Delete(int id, bool persist = true);
         int SaveChanges();
     }
 }

@@ -26,13 +26,9 @@ namespace SpyStore.DAL.Migrations
                     b.Property<string>("CategoryName")
                         .HasMaxLength(50);
 
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("categories","store");
                 });
 
             modelBuilder.Entity("SpyStore.Models.Entities.Customer", b =>
@@ -51,17 +47,13 @@ namespace SpyStore.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.HasKey("Id");
 
                     b.HasIndex("EmailAddress")
                         .IsUnique()
                         .HasName("IX_Customer");
 
-                    b.ToTable("Customers");
+                    b.ToTable("customers","store");
                 });
 
             modelBuilder.Entity("SpyStore.Models.Entities.Order", b =>
@@ -81,15 +73,11 @@ namespace SpyStore.DAL.Migrations
                         .HasColumnType("Date")
                         .HasDefaultValueSql("now()");
 
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("orders","store");
                 });
 
             modelBuilder.Entity("SpyStore.Models.Entities.OrderDetail", b =>
@@ -103,10 +91,6 @@ namespace SpyStore.DAL.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<decimal>("UnitCost");
 
                     b.HasKey("Id");
@@ -115,7 +99,7 @@ namespace SpyStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("order_details","store");
                 });
 
             modelBuilder.Entity("SpyStore.Models.Entities.Product", b =>
@@ -147,10 +131,6 @@ namespace SpyStore.DAL.Migrations
                     b.Property<string>("ProductImageThumb")
                         .HasMaxLength(150);
 
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<decimal>("UnitCost");
 
                     b.Property<int>("UnitsInStock");
@@ -159,7 +139,7 @@ namespace SpyStore.DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("products","store");
                 });
 
             modelBuilder.Entity("SpyStore.Models.Entities.ShoppingCartRecord", b =>
@@ -180,10 +160,6 @@ namespace SpyStore.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(1);
 
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -194,7 +170,7 @@ namespace SpyStore.DAL.Migrations
                         .IsUnique()
                         .HasName("IX_ShoppingCart");
 
-                    b.ToTable("ShoppingCartRecords");
+                    b.ToTable("shopping_cart_records","store");
                 });
 
             modelBuilder.Entity("SpyStore.Models.Entities.Order", b =>

@@ -5,7 +5,7 @@ using SpyStore.Models.Entities.Base;
 
 namespace SpyStore.Models.Entities
 {
-    [Table("Products")]
+    [Table("products", Schema = "store")]
     public class Product :EntityBase
     {
         [MaxLength(3800)]
