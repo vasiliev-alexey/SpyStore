@@ -1,17 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.2" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="NodaTime">
       <HintPath>..\..\..\..\..\.nuget\packages\nodatime\2.3.0\lib\netstandard1.3\NodaTime.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>
