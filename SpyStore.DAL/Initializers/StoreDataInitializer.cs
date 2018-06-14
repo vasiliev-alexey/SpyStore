@@ -6,7 +6,8 @@ using SpyStore.DAL.EF;
 
 namespace SpyStore.DAL.Initializers
 {
-    public static class SampleData
+    public static class StoreDataInitializer
+    
     {
         public static void InitializeData(IServiceProvider serviceProvider)
         {
@@ -21,15 +22,22 @@ namespace SpyStore.DAL.Initializers
         }
         public static void ClearData(StoreContext context)
         {
-            ExecuteDeleteSQL(context, "Categories");
-            ExecuteDeleteSQL(context, "Customers");
+            ExecuteDeleteSQL(context, "categories");
+            ExecuteDeleteSQL(context, "customers");
         //    ResetIdentity(context);
         }
         public static void ExecuteDeleteSQL(StoreContext context, string tableName)
         {
             //context.Database.ExecuteSqlCommand($"Delete from Store.{tableName}");
-            context.Database.ExecuteSqlCommand($"truncate  store.{tableName}  restart identity cascade");
-            
+            var sql1 = $"delete from   store.{tableName}";
+            var sql2 = $"ALTER SEQUENCE store.\"{tableName}_Id_seq\" RESTART WITH 1;";
+           
+
+            if (context.Database != null)
+            {
+                context.Database.ExecuteSqlCommand(sql1);
+                context.Database.ExecuteSqlCommand(sql2);
+            }
         }
    
         public static void SeedData(StoreContext context)

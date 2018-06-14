@@ -28,9 +28,9 @@ namespace SpyStore.DAL.Tests
 
         private void CleanDatabase()
         {
-            _db.Database.ExecuteSqlCommand("truncate  store.categories  restart identity cascade");
-
-         
+            _db.Database.ExecuteSqlCommand("DELETE FROM   store.categories");
+            _db.Database.ExecuteSqlCommand("ALTER SEQUENCE store.\"categories_Id_seq\" RESTART WITH 1;");
+           
         }
 
       

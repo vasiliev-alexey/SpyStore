@@ -8,13 +8,13 @@ using SpyStore.Models.Entities;
 
 namespace SpyStore.DAL.Repos
 {
-    internal class CategoryRepo : RepoBase<Category>, ICategoryRepo
+    public class CategoryRepo : RepoBase<Category>, ICategoryRepo
     {
-        protected CategoryRepo()
+        public CategoryRepo()
         {
         }
 
-        protected CategoryRepo(DbContextOptions<StoreContext> options) : base(options)
+        public CategoryRepo(DbContextOptions<StoreContext> options) : base(options)
         {
         }
 
